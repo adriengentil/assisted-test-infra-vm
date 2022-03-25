@@ -74,4 +74,4 @@ done
 
 virsh shutdown "${DOMAIN_NAME}"
 sleep 60
-./kill "${DOMAIN_NAME}"
+./kill.sh "${DOMAIN_NAME}"
