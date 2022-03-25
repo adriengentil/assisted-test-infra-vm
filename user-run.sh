@@ -9,7 +9,8 @@ export TEST_SUITE=full
 PULL_SECRET="$(cat /tmp/pull-secret.json)"
 export PULL_SECRET
 
-dnf install -y make git jq
+dnf install -y make git jq python3-pip
+pip3 install strato-skipper
 git clone https://github.com/openshift/assisted-test-infra /home/assisted
 cd /home/assisted
 
