@@ -13,7 +13,6 @@ export PULL_SECRET
 export PATH="${PATH}:/usr/local/bin" # required to access skipper
 
 cd "${REPO_DIR}"
-minikube status
 minikube start --force
 make run test_parallel
 
