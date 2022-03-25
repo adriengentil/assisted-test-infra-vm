@@ -11,6 +11,8 @@ export PULL_SECRET
 
 dnf install -y make git jq python3-pip
 pip3 install strato-skipper
+export PATH="${PATH}:/usr/local/bin" # required to access skipper
+
 git clone https://github.com/openshift/assisted-test-infra /home/assisted
 cd /home/assisted
 
