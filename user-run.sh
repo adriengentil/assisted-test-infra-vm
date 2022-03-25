@@ -16,5 +16,6 @@ cd "${REPO_DIR}"
 make create_full_environment run test_parallel
 
 export KUBECONFIG=/home/assisted/build/kubeconfig
+export KUBECONFIG=$(find ${KUBECONFIG} -type f)
 export TEST_FUNC=test_late_binding_kube_api_sno
 make deploy_assisted_operator test_kube_api_parallel
