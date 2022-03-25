@@ -16,11 +16,13 @@ do
 done
 
 echo "Wait for SSH ${BASE_OS_SSH_USER}@${VM_IP_ADDR}..."
-until ssh -q -i "${COMMON_WORKDIR}/${SSH_KEY_NAME}" "${BASE_OS_SSH_USER}@${VM_IP_ADDR}" exit
+until ssh -o "StrictHostKeyChecking no" -q -i "${COMMON_WORKDIR}/${SSH_KEY_NAME}" "${BASE_OS_SSH_USER}@${VM_IP_ADDR}" exit
 do
     sleep 1
 done
 
 scp -o "StrictHostKeyChecking no" -i "${COMMON_WORKDIR}/${SSH_KEY_NAME}"  "${PULL_SECRET_FILE}" "${BASE_OS_SSH_USER}@${VM_IP_ADDR}:/tmp"
 scp -o "StrictHostKeyChecking no" -i "${COMMON_WORKDIR}/${SSH_KEY_NAME}" "${RUN_SCRIPT}" "${BASE_OS_SSH_USER}@${VM_IP_ADDR}:/tmp"
-ssh -o "StrictHostKeyChecking no" -i "${COMMON_WORKDIR}/${SSH_KEY_NAME}" "${BASE_OS_SSH_USER}@${VM_IP_ADDR}" -- nohup /tmp/run.sh > /tmp/run.log 2>&1
+ssh -o "StrictHostKeyChecking no" -i "${COMMON_WORKDIR}/${SSH_KEY_NAME}" "${BASE_OS_SSH_USER}@${VM_IP_ADDR}" -- nohup "/tmp/${RUN_SCRIPT}" > /tmp/run.log 2>&1
+
+echo "ssh -i ${COMMON_WORKDIR}/${SSH_KEY_NAME} ${BASE_OS_SSH_USER}@${VM_IP_ADDR}"
