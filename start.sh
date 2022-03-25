@@ -33,7 +33,7 @@ virt-install --connect qemu:///system \
                 --noautoconsole
 
 # shellcheck source=wait.sh
-source ./wait.sh "${DOMAIN_NAME}"
+source ./wait-ssh.sh "${DOMAIN_NAME}"
 
 scp -o "StrictHostKeyChecking no" -i "${COMMON_WORKDIR}/${SSH_KEY_NAME}"  "${PULL_SECRET_FILE}" "${BASE_OS_SSH_USER}@${VM_IP_ADDR}:/tmp"
 scp -o "StrictHostKeyChecking no" -i "${COMMON_WORKDIR}/${SSH_KEY_NAME}" "${RUN_SCRIPT}" "${BASE_OS_SSH_USER}@${VM_IP_ADDR}:/tmp"
