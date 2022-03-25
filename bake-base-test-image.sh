@@ -48,8 +48,8 @@ qemu-img create -f qcow2 \
 echo "Start the VM..."
 virt-install --connect qemu:///system \
                 -n "${DOMAIN_NAME}" \
-                --vcpu "2" \
-                --ram="4000" \
+                --vcpu "${VM_VCPUS}" \
+                --ram="${VM_RAM}" \
                 -w network=default \
                 --import \
                 --disk path="${COMMON_WORKDIR}/${BASE_TEST_IMAGE_FILENAME}" \
