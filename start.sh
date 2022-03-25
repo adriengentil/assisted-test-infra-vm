@@ -2,23 +2,8 @@
 
 set -xeuo pipefail
 
-WORKDIR="workdir"
-COMMON_WORKDIR="${WORKDIR}/common"
-PULL_SECRET_FILE="${HOME}/pull-secret.json"
-
-VM_OS_FILENAME="os.qcow2"
-VM_IMAGE_SIZE="200G"
-VM_VCPUS="64"
-VM_RAM="200000"
-
-BASE_OS_URL="https://dl.rockylinux.org/pub/rocky/8.5/images/Rocky-8-GenericCloud-8.5-20211114.2.x86_64.qcow2"
-BASE_OS_FILENAME="base.qcow2"
-BASE_OS_SSH_USER="rocky"
-
-CLOUD_INIT_ISO_NAME="cloudinit.iso"
-CLOUD_INIT_INSTANCE_ID="instance"
-
-SSH_KEY_NAME="generic"
+# shellcheck source=.env
+source ".env"
 
 DOMAIN_NAME="${1}"
 
@@ -70,18 +55,4 @@ virt-install --connect qemu:///system \
                 --nographics \
                 --noautoconsole
 
-echo "Wait for the VM to grab an IP..."
-until VM_IP_ADDR=$(virsh -q domifaddr "${DOMAIN_NAME}" | awk '{print $4}' | cut -d/ -f 1)
-do
-    sleep 1
-done
-
-echo "Wait for SSH ${BASE_OS_SSH_USER}@${VM_IP_ADDR}..."
-until ssh -q -i "${COMMON_WORKDIR}/${SSH_KEY_NAME}" "${BASE_OS_SSH_USER}@${VM_IP_ADDR}" exit
-do
-    sleep 1
-done
-
-scp -i "${COMMON_WORKDIR}/${SSH_KEY_NAME}"  "${PULL_SECRET_FILE}" "${BASE_OS_SSH_USER}@${VM_IP_ADDR}:/tmp"
-scp -i "${COMMON_WORKDIR}/${SSH_KEY_NAME}" "${RUN_SCRIPT}" "${BASE_OS_SSH_USER}@${VM_IP_ADDR}:/tmp"
-ssh -q -i "${COMMON_WORKDIR}/${SSH_KEY_NAME}" "${BASE_OS_SSH_USER}@${VM_IP_ADDR}" -- nohup /tmp/run.sh > /tmp/run.log 2>&1
+./boostrap "${DOMAIN_NAME}"
