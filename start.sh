@@ -55,4 +55,4 @@ virt-install --connect qemu:///system \
                 --nographics \
                 --noautoconsole
 
-./boostrap "${DOMAIN_NAME}"
+./boostrap.sh "${DOMAIN_NAME}"
