@@ -12,7 +12,7 @@ VM_IP_ADDR=""
 until [[ "${VM_IP_ADDR}" != "" ]]
 do
     sleep 1
-    VM_IP_ADDR=$(sudo virsh -q domifaddr "${DOMAIN_NAME}" | awk '{print $4}' | cut -d/ -f 1)
+    VM_IP_ADDR=$(virsh -q domifaddr "${DOMAIN_NAME}" | awk '{print $4}' | cut -d/ -f 1)
 done
 
 echo "Wait for SSH ${BASE_OS_SSH_USER}@${VM_IP_ADDR}..."
