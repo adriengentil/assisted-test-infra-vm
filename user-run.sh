@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-sudo -s
-
 set -xeuo pipefail
 
 export REPO_DIR="/home/assisted"

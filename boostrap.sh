@@ -24,6 +24,6 @@ done
 scp -o "StrictHostKeyChecking no" -i "${COMMON_WORKDIR}/${SSH_KEY_NAME}"  "${PULL_SECRET_FILE}" "${BASE_OS_SSH_USER}@${VM_IP_ADDR}:/tmp"
 scp -o "StrictHostKeyChecking no" -i "${COMMON_WORKDIR}/${SSH_KEY_NAME}" "${RUN_SCRIPT}" "${BASE_OS_SSH_USER}@${VM_IP_ADDR}:/tmp"
 ssh -o "StrictHostKeyChecking no" -i "${COMMON_WORKDIR}/${SSH_KEY_NAME}" "${BASE_OS_SSH_USER}@${VM_IP_ADDR}" << EOF
-nohup "/tmp/${RUN_SCRIPT}" > /tmp/run.log 2>&1 &
+sudo nohup "/tmp/${RUN_SCRIPT}" > /tmp/run.log 2>&1 &
 EOF
 ssh -o "StrictHostKeyChecking no" -i "${COMMON_WORKDIR}/${SSH_KEY_NAME}" "${BASE_OS_SSH_USER}@${VM_IP_ADDR}" -- tail -f /tmp/run.log
