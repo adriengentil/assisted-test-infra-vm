@@ -20,7 +20,7 @@ CLOUD_INIT_INSTANCE_ID="instance"
 
 SSH_KEY_NAME="generic"
 
-DOMAIN_NAME=${0}
+DOMAIN_NAME="${1}"
 
 # Common dir with OS, SSH keys, cloud-init iso
 mkdir -p "${COMMON_WORKDIR}"
@@ -53,9 +53,9 @@ EOF
 fi
 
 # Create qemu overlay and resize it
-mkdir -p "${DOMAIN_NAME}"
-qemu-img create -f qcow2 -o backing_file="${COMMON_WORKDIR}/${BASE_OS_FILENAME}" "${DOMAIN_NAME}/${VM_OS_FILENAME}"
-qemu-img resize "${DOMAIN_NAME}/${VM_OS_FILENAME}" "${VM_IMAGE_SIZE}"
+mkdir -p "${WORKDIR}/${DOMAIN_NAME}"
+qemu-img create -f qcow2 -o backing_file="${COMMON_WORKDIR}/${BASE_OS_FILENAME}" "${WORKDIR}/${DOMAIN_NAME}/${VM_OS_FILENAME}"
+qemu-img resize "${WORKDIR}/${DOMAIN_NAME}/${VM_OS_FILENAME}" "${VM_IMAGE_SIZE}"
 
 # start VM
 echo "Start the VM..."
@@ -65,7 +65,7 @@ virt-install --connect qemu:///system \
                 --ram="${VM_RAM}" \
                 -w network=default \
                 --import \
-                --disk path="${DOMAIN_NAME}/${VM_OS_FILENAME}" \
+                --disk path="${WORKDIR}/${DOMAIN_NAME}/${VM_OS_FILENAME}" \
                 --disk path="${COMMON_WORKDIR}/${CLOUD_INIT_ISO_NAME},device=cdrom"\
                 --nographics \
                 --noautoconsole
