@@ -16,6 +16,11 @@ export PATH="${PATH}:/usr/local/bin" # required to access skipper
 git clone https://github.com/openshift/assisted-test-infra /home/assisted
 cd /home/assisted
 
+# fix libvirt uri
+git remote add agentil https://github.com/adriengentil/assisted-test-infra.git
+git fetch agentil
+git cherry-pick 85d59f11ae8cfd6dc202fc182be895ee0f6a37d4
+
 make create_full_environment run test_parallel
 
 export KUBECONFIG=/home/assisted/build/kubeconfig
