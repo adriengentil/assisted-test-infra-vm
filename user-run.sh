@@ -18,4 +18,4 @@ make run test_parallel
 
 export KUBECONFIG=/home/assisted/build/kubeconfig
 export TEST_FUNC=test_late_binding_kube_api_sno
-make deploy_assisted_operator test_kube_api_parallel
+make create_full_environment deploy_assisted_operator test_kube_api_parallel
