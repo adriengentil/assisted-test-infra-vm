@@ -54,7 +54,7 @@ fi
 
 # Create qemu overlay and resize it
 mkdir -p "${WORKDIR}/${DOMAIN_NAME}"
-qemu-img create -f qcow2 -o backing_file="${COMMON_WORKDIR}/${BASE_OS_FILENAME}" "${WORKDIR}/${DOMAIN_NAME}/${VM_OS_FILENAME}"
+qemu-img create -f qcow2 -o backing_file="$(readlink -f ${COMMON_WORKDIR}/${BASE_OS_FILENAME})" "${WORKDIR}/${DOMAIN_NAME}/${VM_OS_FILENAME}"
 qemu-img resize "${WORKDIR}/${DOMAIN_NAME}/${VM_OS_FILENAME}" "${VM_IMAGE_SIZE}"
 
 # start VM
